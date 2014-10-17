@@ -1,0 +1,28 @@
+//this defines what a is equal to
+float a = 0;
+//this defines what r is equal to
+float r = 0;
+
+// void setup is used for used to hold all the setup commands
+void setup() {
+  //this is the size of the web browzer
+  size(400, 400, P3D);
+}
+//every thing inside of the draw function is repeated
+void draw() {
+  // the background command sets the color of the background
+  background(80);
+  //translate command draws a cube on the screen
+  //the mouseX and mouseY  commands set the x and y cordinents
+  // of the cube to wherever the mouse is located
+  translate(mouseX, mouseY, map(noise(a), 0, 1, -400, 300));
+  //the rotateY command is used to make the cube spin on its Y 
+  //axis
+  rotateY(r);
+  //the box command is used to set the size of the box
+  box(50);
+  // what these lines of code are saying is a what used to = 0
+  //is now equall to +.01 so now the cube is constantly spinning
+  a = a + 0.01;
+  r = r + 0.02;
+}
