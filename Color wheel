@@ -1,0 +1,56 @@
+import processing.serial.*;
+import cc.arduino.*;
+
+Arduino arduino; //creates arduino object
+
+color back = color(64, 218, 255); //variables for the 2 colors
+
+int sensorRed= 1;
+int sensorGreen = 0;
+int sensorBlue = 2;
+int sensorSize = 3;
+int read1;
+int read2;
+int read3;
+int read4;
+
+float valueRed;
+float valueGreen;
+float valueBlue;
+float valueSize;
+
+
+void setup() {
+  size(800, 600);
+  arduino = new Arduino(this, Arduino.list()[2], 57600); //sets up arduino
+    arduino.pinMode(sensorRed, Arduino.INPUT);//setup pins to be input (A0 =0?)
+    arduino.pinMode(sensorGreen, Arduino.INPUT);
+    arduino.pinMode(sensorBlue, Arduino.INPUT);
+
+    background(back);
+}
+
+void draw() {
+       if(mousePressed) {
+         
+ 
+  read1=arduino.analogRead(sensorRed);
+  read2=arduino.analogRead(sensorGreen);
+  read3=arduino.analogRead(sensorBlue);
+  read4=arduino.analogRead(sensorSize);
+  background(back);
+ // println (read);
+  valueRed=map(read1, 980, 1023,0,250 ); //use to callibrate 
+  valueGreen=map(read2,980,1023,0,250);
+  valueBlue=map(read3,980,1023,0,250);
+  valueSize=map(read4,980,1030,10,600);
+  fill(valueRed,valueGreen,valueBlue); 
+  ellipse(400, 300,valueSize,valueSize);
+  ellipse(100,100,50,50);
+  ellipse(700,100,50,50);
+  ellipse(100,500,50,50);
+  ellipse(700,500,50,50);
+  println(valueSize);
+   
+       }
+}
