@@ -12,7 +12,7 @@ int sensorSize = 3;
 int read1;
 int read2;
 int read3;
-
+int read4;
 
 float valueRed;
 float valueGreen;
