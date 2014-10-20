@@ -1,11 +1,11 @@
-int num = 60;
-float mx[] = new float[num];
-float my[] = new float[num];
+int num = 60;//int 
+float mx[] = new float[num];//Declares a variable so it can be used later on 
+float my[] = new float[num];//Declares a variable so it can be used later on 
 
 void setup() {
-  size(640, 360);
-  noStroke();
-  fill(255, 153); 
+  size(640, 360);//The size command sets the size of the browzer window.
+  noStroke();//noStroke sets weather or not there is an outline
+  fill(255, 153); //Fill sets the color of objects
 }
 
 void draw() {
