@@ -14,12 +14,12 @@ void draw() {
   // Cycle through the array, using a different entry on each frame. 
   // Using modulo (%) like this is faster than moving all the values over.
   int which = frameCount % num;
-  mx[which] = mouseX;
-  my[which] = mouseY;
+  mx[which] = mouseX;//Sets the X cordinent of the ellpise 
+  my[which] = mouseY;//Sets the Y cordinent of the ellpise 
   
   for (int i = 0; i < num; i++) { 
     // which+1 is the smallest (the oldest in the array)
     int index = (which+1 + i) % num;
-    ellipse(mx[index], my[index], i, i);
+    ellipse(mx[index], my[index], i, i);//Draws a circle on the screen that is at the location of the mouse.
   }
 }
