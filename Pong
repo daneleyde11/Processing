@@ -1,0 +1,130 @@
+import org.firmata.*;
+import cc.arduino.*;
+
+import processing.serial.*;              
+import java.awt.Rectangle;               
+
+Serial myPort;        
+
+Rectangle leftPaddle, rightPaddle;       
+
+int paddleHeight = 85;            
+int paddleWidth = 10;             
+
+int ballSize = 10;     
+int xDirection = 5;   
+int yDirection = 5;    
+int xPos, yPos;  
+int rectSize = 25;
+
+int leftScore = 0;     
+int rightScore = 0;     
+
+int fontSize = 20;   
+
+void setup() {
+
+  size(800, 500);       
+
+  
+  leftPaddle = new Rectangle(50, height/2, paddleWidth, paddleHeight);
+  rightPaddle = new Rectangle(width-50, height/2, paddleWidth, paddleHeight);
+ 
+  noStroke(); 
+  fill(255);  
+
+  resetBall();
+
+  PFont myFont = createFont(PFont.list()[2], fontSize);
+  textFont(myFont);
+    
+  
+  println(Serial.list());
+  myPort = new Serial(this, Serial.list()[2], 9600);
+  
+  myPort.bufferUntil('\n');
+}
+
+void draw() {
+  
+  background(0);
+  fill(250,0,0);
+  rect(405,0,10,500);
+  fill(250,250,250);
+  rect(1000,25,0,0);
+  rect(350,100,25,25);
+  rect(200,250,25,25);
+  rect(350,400,25,25);
+  rect
+  
+  rect(leftPaddle.x, leftPaddle.y, leftPaddle.width, leftPaddle.height);
+  rect(rightPaddle.x, rightPaddle.y, rightPaddle.width, rightPaddle.height);
+
+  
+  animateBall();
+
+  
+  text(leftScore, fontSize, fontSize);
+  text(rightScore, width-fontSize, fontSize);
+}
+
+
+void serialEvent(Serial thisPort) { 
+
+  
+  String inputString = thisPort.readStringUntil('\n');
+
+  if (inputString != null)
+  {
+   
+    inputString = trim(inputString);
+
+    
+    int sensors[] = int(split(inputString, ','));
+
+    
+    if (sensors.length == 2) {
+      leftPaddle.y = int(map(sensors[0], 0, 425, 0, height - leftPaddle.height));
+      rightPaddle.y = int(map(sensors[1], 0,425 , 0, height - rightPaddle.height));
+    }
+  }
+}
+
+void animateBall() {
+  if (leftPaddle.contains(xPos, yPos) ||    
+  rightPaddle.contains(xPos, yPos)) {       
+    xDirection = -xDirection;               
+  }
+
+  
+  if (xPos < 0) 
+  {     
+    rightScore++;     
+    resetBall();   
+  }  
+  if (xPos > width) 
+  {
+    leftScore++;
+    resetBall();
+  }
+  
+  if ((yPos <= 0) || (yPos >=height)) {
+    yDirection = -yDirection;
+  }
+  
+  xPos = xPos + xDirection;
+  yPos = yPos + yDirection;
+
+  
+  rect(xPos, yPos, ballSize, ballSize);
+}
+
+void resetBall()
+{
+  
+  xPos = width/2;
+  yPos = height/2;
+}
+
+    
+ 
